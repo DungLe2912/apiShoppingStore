@@ -3,6 +3,8 @@ const passportJWT = require('passport-jwt');
 const LocalStrategy = require('passport-local').Strategy;
 const bcrypt = require('bcryptjs');
 const accountService = require('../services/account.service');
+const inforUserService = require('../services/inforuser.service');
+const errorcode = require('../constant/errorcode');
 const JWTStrategy   = passportJWT.Strategy;
 const ExtractJWT = passportJWT.ExtractJwt;
 module.exports = function (app) {
@@ -22,8 +24,8 @@ module.exports = function (app) {
         return done(null, false, { message: 'Invalid username' });
       }
 
-      const user = rows.dataValues;
-     // console.log(rows.dataValues);
+      const user = rows.data.dataValues;
+      console.log(user);
      
       const ret = bcrypt.compareSync(password, user.password);
  
@@ -54,19 +56,18 @@ module.exports = function (app) {
     passReqToCallback :true
     },
     function (req,jwtPayload, done) { 
+     // console.log(jwtPayload.username);
     return accountService.singleByUserName(jwtPayload.username)
         .then(results => {
-          if(results.length<1)
+          if(results.errCode===errorcode.NO_DATA)
           return done(null, null, { message: 'Invalid username' });
-          const user = results[0];
+          const user = results.data.dataValues;
        //   console.log(req.body.username);
             const obj = {
-                ID:user.IDAccount,
-                username: user.Username,
-                email: user.Email,
-                type:user.Type_acc
+                id:user.id,
+                username: user.username,
             }
-          //  console.log(obj);
+            console.log(obj);
             return done(null,obj);
         })
         .catch(err => {
