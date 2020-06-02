@@ -24,4 +24,25 @@ exports.getInfor = async function (req, res, next) {
             })
 
     })(req, res, next);
+};
+exports.addInfor=async function(req,res,next){
+    passport.authenticate('jwt', { session: false }, async (err, user, info) => {
+        console.log(user);
+        if (!user) {
+            return res.status(400).json({
+                message: info ? info.message : 'You are not logged in',
+                user: user
+            });
+        }
+        const infor=req.body;
+        inforRepo.addInforUser(infor).then(results => {
+                if (results.dataValues === null)
+                    return res.status(400).send({
+                        message: "User do not have information"
+                    })
+                var obj = results.dataValues;
+                res.send({ success: true, obj, message: 'Get information complete' });
+            })
+
+    })(req, res, next);
 }

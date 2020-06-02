@@ -60,7 +60,9 @@ module.exports = function (app) {
     return accountService.singleByUserName(jwtPayload.username)
         .then(results => {
           if(results.errCode===errorcode.NO_DATA)
-          return done(null, null, { message: 'Invalid username' });
+            return done(null, null, { message: 'Invalid username' });
+          if(results.data.dataValues.isDeleted===true)
+            return done(null,null,{message:'User not exist'});
           const user = results.data.dataValues;
        //   console.log(req.body.username);
             const obj = {

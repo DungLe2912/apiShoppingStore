@@ -10,7 +10,19 @@ async function getInforUserByID(id){
     });
     return account;
 }
-
+async function addInforUser(infor){
+    const inforUser = await INFOR_USER.create({
+        user_id:infor.user_id,
+        firstname: infor.firstname,
+        lastname: infor.lastname,
+        avatar: infor.avatar,
+        email: infor.email,
+        dob:infor.dob,
+        gender:dob.gender,
+    });
+    return inforUser;
+}
 module.exports={
     getInforUserByID,
+    addInforUser
 }
