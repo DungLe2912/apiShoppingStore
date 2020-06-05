@@ -8,6 +8,7 @@ const path = require('path');
 const app = express();
 const db = require('./models');
 const indexController = require('./controller/index');
+require('dotenv').config();
 app.use(bodyParser.json());
 app.use((req, res, next) => {
     res.header('Access-Control-Allow-Origin', '*');
@@ -43,7 +44,7 @@ app.use(function (err, req, res, next) {
     res.render('error');
 });
 
-
+console.log(process.env.PORT);
 
 
 app.listen(5000, function () {

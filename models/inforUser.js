@@ -33,14 +33,6 @@ module.exports = (sequelize) => {
         type: DataTypes.STRING,
         defaultValue: null,
       },
-      email: {
-        type: DataTypes.STRING,
-        defaultValue: null,
-        validate: {
-          isEmail: true,
-        },
-        unique:true,
-      },
       dob: {
         type: DataTypes.DATE,
         defaultValue: null,

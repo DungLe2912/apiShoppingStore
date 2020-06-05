@@ -25,7 +25,7 @@ async function createAccount(accountData){
     const account = await Account.create({
         username:accountData.username,
         password:accountData.password,
-        is_deleted:false,
+        email: accountData.email,
     });
     return account;
 }

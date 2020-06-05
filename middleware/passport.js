@@ -18,14 +18,13 @@ module.exports = function (app) {
   }, (username, password, done) => {
    // console.log(username);
     accountService.singleByUserName(username).then(rows => {
-      console.log(rows);
-      if (rows === null) {
-        console.log("Not found")
-        return done(null, false, { message: 'Invalid username' });
+     // console.log(rows);
+      if (rows.errCode === errorcode.NO_DATA) {
+        console.log("Not found user")
+        return done(null, false, { message: 'Không tìm thấy người dùng' });
       }
 
       const user = rows.data.dataValues;
-      console.log(user);
      
       const ret = bcrypt.compareSync(password, user.password);
  
@@ -33,8 +32,7 @@ module.exports = function (app) {
         console.log("Done");
         return done(null, user);
       }
-      console.log("Invalid");
-      return done(null, false, { message: 'Invalid password' });
+      return done(null, false, { message: 'Mật khẩu không chính xác' });
     }).catch(err => {
       return done(err, false);
       

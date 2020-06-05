@@ -4,7 +4,7 @@ const passport = require('passport');
 const accountService = require('./account.service');
 const errorcode = require('../constant/errorcode');
 exports.register = async function (req, res, next) {
-  const { username, password } = req.body;
+  const { username, password, email } = req.body;
 
   if (!username || !password) {
     return res.status(400).send({
@@ -24,6 +24,7 @@ exports.register = async function (req, res, next) {
   const accountData = {
     username: username,
     password: hashedPassword,
+    email: email,
   }
 
   const addAccount = await accountService.createAccount(accountData).then(data => {
@@ -34,23 +35,32 @@ exports.register = async function (req, res, next) {
 exports.login = async (req, res, next) => {
   passport.authenticate('local', (err, user, info) => {
     if (err) {
-      return res.status(400).json({
-        message: info ? info.message : 'Login failed',
-        user: user
+      //console.log(user);
+      return res.status(200).json({
+        success: false,
+        message: info ? info.message : 'Đăng nhập thất bại',
+        token:'',
+        errCode: errorcode.LOGIN_FAIL,
       });
     }
 
     if (!user && info) {
-      return res.status(400).json({
-        message: info.message
+      return res.status(200).json({
+        success: false,
+        message: info.message,
+        token:'',
+        errCode: errorcode.LOGIN_FAIL,
       })
     }
 
     req.logIn(user, err => {
+    //  console.log(user);
       if (err)
-        return res.status(400).json({
-          message: info ? info.message : 'Login failed',
-          user: user
+        return res.status(200).json({
+          success:false,
+          message: info ? info.message : 'Đăng nhập thất bại',
+          token:'',
+          errCode: errorcode.LOGIN_FAIL,
         });
 
 
@@ -63,9 +73,9 @@ exports.login = async (req, res, next) => {
       const token = jwt.sign({ username: user.username }, 'your_jwt_secret');
       return res.json({
         success: true,
-        message: 'Authentication successful!',
-        user: obj,
-        token: token
+        message: 'Đăng nhập thành công!',
+        token: token,
+        errCode:'',
       });
     });
   })(req, res, next);

@@ -12,13 +12,12 @@ async function getInforUserByID(id){
 }
 async function addInforUser(infor){
     const inforUser = await INFOR_USER.create({
-        user_id:infor.user_id,
+        userID:infor.user_id,
         firstname: infor.firstname,
         lastname: infor.lastname,
         avatar: infor.avatar,
-        email: infor.email,
         dob:infor.dob,
-        gender:dob.gender,
+        gender:infor.gender,
     });
     return inforUser;
 }

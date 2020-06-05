@@ -1,5 +1,5 @@
 const express = require('express');
 const router = express.Router();
-router.use('/',require('./user/index'))
+router.use('/',require('./auth/index'))
 
 module.exports = router;

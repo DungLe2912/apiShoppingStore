@@ -19,6 +19,14 @@ module.exports = (sequelize) => {
         type: DataTypes.STRING,
         allowNull: false,
       },
+      email: {
+        type: DataTypes.STRING,
+        defaultValue: null,
+        validate: {
+          isEmail: true,
+        },
+        unique:true,
+      },
       isDeleted: {
         type: DataTypes.BOOLEAN,
         defaultValue: false,
