@@ -8,31 +8,42 @@ module.exports = (sequelize) => {
         type: DataTypes.UUID,
         defaultValue: DataTypes.UUIDV4,
         primaryKey: true,
-        allowNull: false,
+        allowNull: false
       },
       username: {
         type: DataTypes.STRING,
         defaultValue: null,
-        unique:true,
+        unique: true
       },
       password: {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: false
+      },
+      email: {
+        type: DataTypes.STRING,
+        defaultValue: null,
+        validate: {
+          isEmail: true
+        },
+        unique: true
+      },
+      secretTokenEmail: {
+        type: DataTypes.STRING
       },
       isDeleted: {
         type: DataTypes.BOOLEAN,
-        defaultValue: false,
+        defaultValue: true,
         allowNull: false,
-        field: 'is_deleted',
-      },
+        field: 'is_deleted'
+      }
     },
     {
       modelName: 'Account',
       tableName: 'account',
       sequelize,
       updatedAt: 'updated_at',
-      createdAt: 'created_at',
-    },
+      createdAt: 'created_at'
+    }
   );
   return Account;
 };

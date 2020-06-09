@@ -9,7 +9,7 @@ module.exports = (sequelize) => {
         type: DataTypes.UUID,
         defaultValue: DataTypes.UUIDV4,
         primaryKey: true,
-        allowNull: false,
+        allowNull: false
       },
       userID: {
         type: DataTypes.UUID,
@@ -18,45 +18,37 @@ module.exports = (sequelize) => {
         references: {
           model: Account(sequelize),
           key: 'id',
-          deferrable: Deferrable.INITIALLY_IMMEDIATE,
-        },
+          deferrable: Deferrable.INITIALLY_IMMEDIATE
+        }
       },
       firstname: {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: false
       },
       lastname: {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: false
       },
       avatar: {
         type: DataTypes.STRING,
-        defaultValue: null,
-      },
-      email: {
-        type: DataTypes.STRING,
-        defaultValue: null,
-        validate: {
-          isEmail: true,
-        },
-        unique:true,
+        defaultValue: null
       },
       dob: {
         type: DataTypes.DATE,
-        defaultValue: null,
+        defaultValue: null
       },
       gender: {
         type: DataTypes.INTEGER,
-        defaultValue: null,
-      },
+        defaultValue: null
+      }
     },
     {
       modelName: 'INFOR_USER',
       tableName: 'infor_user',
       sequelize,
       updatedAt: 'updated_at',
-      createdAt: 'created_at',
-    },
+      createdAt: 'created_at'
+    }
   );
   return INFOR_USER;
 };

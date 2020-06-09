@@ -12,12 +12,14 @@ class ErrorBase extends Error {
       this.message = error.message || message;
       this.debug.error = error.stack;
       this.debug.message = error.message;
-    } else if (error instanceof ErrorBase) {
+    }
+    else if (error instanceof ErrorBase) {
       this.message = error.message || message;
       this.debug = error.debug;
       this.statusCode = error.statusCode;
       this.type = error.type;
-    } else {
+    }
+    else {
       this.message = message;
     }
   }
@@ -84,5 +86,5 @@ module.exports = {
   BadRequest,
   Forbidden,
   ErrorBase,
-  NotExist,
+  NotExist
 };

@@ -1,0 +1,32 @@
+{
+  "apps": [
+    {
+      "name": "yhoc-vowel-api",
+      "script": "./app.js",
+      "watch": true,
+      "exec_mode": "cluster",
+      "env": {
+        "NODE_ENV": "development"
+      },
+      "env_production": {
+        "NODE_ENV": "production",
+        "PORT": 4000
+      }
+    }
+  ],
+  "deploy": {
+    "production": {
+      "user": "root",
+      "host": ["165.22.104.29"],
+      "ref": "origin/staging",
+      "repo": "git@gitlab.com:fit-da-2020-yhoc-vowel/yhoc-vowel-api.git",
+      "path": "/root/yhoc-vowel-api",
+      "post-setup": "npm install; pm2 start ecosystem.json --env production",
+      "post-deploy": "npm install; pm2 restart ecosystem.json --env production",
+      "ssh_options": [
+        "StrictHostKeyChecking=no",
+        "PasswordAuthentication=no"
+      ]
+    }
+  }
+}
