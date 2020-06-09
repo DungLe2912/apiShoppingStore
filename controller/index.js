@@ -1,5 +1,6 @@
 const express = require('express');
+
 const router = express.Router();
-router.use('/',require('./auth/index'))
+router.use('/', require('./auth/index'));
 
 module.exports = router;
